@@ -1,14 +1,13 @@
 (function () {
   'use strict';
 
-  // Fictional feedback data
-  const feedbacks = [
-    { name: 'Carlos Silva', rating: 5, text: 'Excelente serviço! Muito rápido e confiável. Recomendo!' },
-    { name: 'Ana Santos', rating: 5, text: 'Perfeito! Funcionou na primeira tentativa. Muito bom!' },
-    { name: 'João Oliveira', rating: 5, text: 'Melhor site para condos que já usei. 10/10!' },
-    { name: 'Maria Costa', rating: 5, text: 'Serviço impecável, atendimento rápido. Voltarei com certeza!' },
-    { name: 'Pedro Martins', rating: 5, text: 'Muito profissional e seguro. Recomendo para todos!' },
-    { name: 'Sofia Ferreira', rating: 5, text: 'Fantástico! Sem problemas, tudo funcionou perfeitamente.' },
+  // List of Portuguese names
+  const names = [
+    'João Silva', 'Maria Santos', 'Carlos Oliveira', 'Ana Costa', 'Pedro Martins',
+    'Sofia Ferreira', 'Miguel Alves', 'Laura Gomes', 'Ricardo Dias', 'Inês Rocha',
+    'Bruno Costa', 'Marta Pereira', 'André Sousa', 'Joana Martins', 'Nuno Ferreira',
+    'Raquel Santos', 'Tiago Oliveira', 'Filipa Gomes', 'Gonçalo Dias', 'Catarina Rocha',
+    'Vitor Alves', 'Cláudia Pereira', 'Rui Sousa', 'Daniela Martins', 'Paulo Ferreira',
   ];
 
   // FAQ data
@@ -35,110 +34,73 @@
     },
   ];
 
-  // Fictional recent verifications
-  const recentVerifications = [
-    { name: 'João Silva', time: 'há 2 minutos' },
-    { name: 'Maria Santos', time: 'há 5 minutos' },
-    { name: 'Carlos Oliveira', time: 'há 8 minutos' },
-    { name: 'Ana Costa', time: 'há 12 minutos' },
-    { name: 'Pedro Martins', time: 'há 15 minutos' },
-  ];
+  // Generate random name
+  function getRandomName() {
+    return names[Math.floor(Math.random() * names.length)];
+  }
 
-  function createFeedbacksSection() {
+  // Generate time ago string
+  function getTimeAgo() {
+    const times = ['há 1 minuto', 'há 2 minutos', 'há 3 minutos', 'há 4 minutos', 'há 5 minutos'];
+    return times[Math.floor(Math.random() * times.length)];
+  }
+
+  function createOnlineSection() {
     var section = document.createElement('section');
-    section.id = 'feedbacks-section';
+    section.id = 'online-section';
     section.style.cssText = [
-      'margin-top: 80px',
-      'margin-bottom: 80px',
-      'padding: 60px 24px',
+      'margin-top: 40px',
+      'margin-bottom: 60px',
+      'padding: 40px 24px',
       'background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(239, 68, 68, 0.02) 100%)',
       'border-top: 1px solid rgba(239, 68, 68, 0.1)',
       'border-bottom: 1px solid rgba(239, 68, 68, 0.1)',
     ].join(';');
 
-    // Title
-    var title = document.createElement('h2');
-    title.style.cssText = [
-      'text-align: center',
-      'font-size: 32px',
-      'font-weight: 900',
-      'color: #f5f5f5',
-      'margin-bottom: 12px',
-      'letter-spacing: -0.03em',
-    ].join(';');
-    title.textContent = 'O que Dizem os Utilizadores';
-
-    // Subtitle
-    var subtitle = document.createElement('p');
-    subtitle.style.cssText = [
-      'text-align: center',
-      'font-size: 14px',
-      'color: rgba(156, 163, 175, 0.8)',
-      'margin-bottom: 48px',
-      'max-width: 600px',
-      'margin-left: auto',
-      'margin-right: auto',
-    ].join(';');
-    subtitle.textContent = 'Milhares de utilizadores confiam em nós. Veja o que eles dizem:';
-
-    section.appendChild(title);
-    section.appendChild(subtitle);
-
-    // Feedbacks grid
-    var grid = document.createElement('div');
-    grid.style.cssText = [
-      'display: grid',
-      'grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))',
-      'gap: 24px',
+    // Container
+    var container = document.createElement('div');
+    container.style.cssText = [
       'max-width: 1200px',
       'margin: 0 auto',
+      'text-align: center',
     ].join(';');
 
-    feedbacks.forEach(function (feedback) {
-      var card = document.createElement('div');
-      card.style.cssText = [
-        'background: rgba(20, 5, 10, 0.4)',
-        'border: 1px solid rgba(239, 68, 68, 0.2)',
-        'border-radius: 12px',
-        'padding: 24px',
-        'transition: all 0.3s ease',
-      ].join(';');
+    // Online title
+    var onlineTitle = document.createElement('h3');
+    onlineTitle.style.cssText = [
+      'font-size: 14px',
+      'font-weight: 600',
+      'color: rgba(156, 163, 175, 0.8)',
+      'text-transform: uppercase',
+      'letter-spacing: 0.05em',
+      'margin-bottom: 16px',
+    ].join(';');
+    onlineTitle.textContent = 'Pessoas Online Agora';
 
-      // Stars
-      var stars = document.createElement('div');
-      stars.style.cssText = [
-        'font-size: 16px',
-        'margin-bottom: 12px',
-        'color: #fbbf24',
-      ].join(';');
-      stars.textContent = '⭐'.repeat(feedback.rating);
+    // Online count
+    var onlineCount = document.createElement('div');
+    onlineCount.style.cssText = [
+      'font-size: 48px',
+      'font-weight: 900',
+      'color: #ef4444',
+      'margin-bottom: 8px',
+      'letter-spacing: -0.03em',
+    ].join(';');
+    onlineCount.textContent = '250+';
 
-      // Text
-      var text = document.createElement('p');
-      text.style.cssText = [
-        'font-size: 14px',
-        'color: #e5e7eb',
-        'margin-bottom: 16px',
-        'line-height: 1.6',
-      ].join(';');
-      text.textContent = '"' + feedback.text + '"';
+    // Online subtitle
+    var onlineSubtitle = document.createElement('p');
+    onlineSubtitle.style.cssText = [
+      'font-size: 13px',
+      'color: rgba(156, 163, 175, 0.7)',
+    ].join(';');
+    onlineSubtitle.textContent = 'utilizadores activos neste momento';
 
-      // Name
-      var name = document.createElement('p');
-      name.style.cssText = [
-        'font-size: 13px',
-        'font-weight: 600',
-        'color: #ef4444',
-      ].join(';');
-      name.textContent = '— ' + feedback.name;
+    container.appendChild(onlineTitle);
+    container.appendChild(onlineCount);
+    container.appendChild(onlineSubtitle);
+    section.appendChild(container);
 
-      card.appendChild(stars);
-      card.appendChild(text);
-      card.appendChild(name);
-      grid.appendChild(card);
-    });
-
-    section.appendChild(grid);
     return section;
   }
 
@@ -231,68 +193,16 @@
       'margin-top: 80px',
       'margin-bottom: 80px',
       'padding: 60px 24px',
-      'background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(239, 68, 68, 0.02) 100%)',
-      'border-top: 1px solid rgba(239, 68, 68, 0.1)',
-      'border-bottom: 1px solid rgba(239, 68, 68, 0.1)',
     ].join(';');
 
     // Container
     var container = document.createElement('div');
     container.style.cssText = [
-      'max-width: 1200px',
+      'max-width: 800px',
       'margin: 0 auto',
-      'display: grid',
-      'grid-template-columns: 1fr 1fr',
-      'gap: 60px',
-      'align-items: center',
     ].join(';');
 
-    // Left side - Online counter
-    var leftSide = document.createElement('div');
-    leftSide.style.cssText = [
-      'text-align: center',
-    ].join(';');
-
-    var onlineTitle = document.createElement('h3');
-    onlineTitle.style.cssText = [
-      'font-size: 14px',
-      'font-weight: 600',
-      'color: rgba(156, 163, 175, 0.8)',
-      'text-transform: uppercase',
-      'letter-spacing: 0.05em',
-      'margin-bottom: 16px',
-    ].join(';');
-    onlineTitle.textContent = 'Pessoas Online Agora';
-
-    var onlineCount = document.createElement('div');
-    onlineCount.style.cssText = [
-      'font-size: 48px',
-      'font-weight: 900',
-      'color: #ef4444',
-      'margin-bottom: 8px',
-      'letter-spacing: -0.03em',
-    ].join(';');
-    onlineCount.textContent = '250+';
-
-    var onlineSubtitle = document.createElement('p');
-    onlineSubtitle.style.cssText = [
-      'font-size: 13px',
-      'color: rgba(156, 163, 175, 0.7)',
-    ].join(';');
-    onlineSubtitle.textContent = 'utilizadores activos neste momento';
-
-    leftSide.appendChild(onlineTitle);
-    leftSide.appendChild(onlineCount);
-    leftSide.appendChild(onlineSubtitle);
-
-    // Right side - Recent verifications
-    var rightSide = document.createElement('div');
-    rightSide.style.cssText = [
-      'display: flex',
-      'flex-direction: column',
-      'gap: 16px',
-    ].join(';');
-
+    // Title
     var recentTitle = document.createElement('h3');
     recentTitle.style.cssText = [
       'font-size: 14px',
@@ -300,62 +210,86 @@
       'color: rgba(156, 163, 175, 0.8)',
       'text-transform: uppercase',
       'letter-spacing: 0.05em',
-      'margin-bottom: 8px',
+      'margin-bottom: 24px',
+      'text-align: center',
     ].join(';');
     recentTitle.textContent = 'Últimas Verificações';
 
-    rightSide.appendChild(recentTitle);
+    container.appendChild(recentTitle);
 
-    recentVerifications.forEach(function (verification) {
-      var item = document.createElement('div');
-      item.style.cssText = [
-        'display: flex',
-        'align-items: center',
-        'gap: 12px',
-        'padding: 12px',
-        'background: rgba(20, 5, 10, 0.3)',
-        'border-radius: 6px',
-        'border-left: 3px solid #ef4444',
-      ].join(';');
+    // Create verification items container
+    var itemsContainer = document.createElement('div');
+    itemsContainer.id = 'verifications-items';
+    itemsContainer.style.cssText = [
+      'display: flex',
+      'flex-direction: column',
+      'gap: 12px',
+    ].join(';');
 
-      var icon = document.createElement('span');
-      icon.style.cssText = [
-        'font-size: 16px',
-      ].join(';');
-      icon.textContent = '✅';
-
-      var info = document.createElement('div');
-      info.style.cssText = [
-        'flex: 1',
-      ].join(';');
-
-      var name = document.createElement('p');
-      name.style.cssText = [
-        'font-size: 13px',
-        'font-weight: 600',
-        'color: #e5e7eb',
-        'margin: 0',
-      ].join(';');
-      name.textContent = verification.name;
-
-      var time = document.createElement('p');
-      time.style.cssText = [
-        'font-size: 12px',
-        'color: rgba(156, 163, 175, 0.7)',
-        'margin: 0',
-      ].join(';');
-      time.textContent = 'verificou ' + verification.time;
-
-      info.appendChild(name);
-      info.appendChild(time);
-      item.appendChild(icon);
-      item.appendChild(info);
-      rightSide.appendChild(item);
-    });
-
-    container.appendChild(leftSide);
-    container.appendChild(rightSide);
+    container.appendChild(itemsContainer);
     section.appendChild(container);
+
+    // Function to update verifications
+    function updateVerifications() {
+      var itemsContainer = document.getElementById('verifications-items');
+      if (!itemsContainer) return;
+
+      itemsContainer.innerHTML = '';
+
+      // Create 5 random verifications
+      for (var i = 0; i < 5; i++) {
+        var item = document.createElement('div');
+        item.style.cssText = [
+          'display: flex',
+          'align-items: center',
+          'gap: 12px',
+          'padding: 12px',
+          'background: rgba(20, 5, 10, 0.3)',
+          'border-radius: 6px',
+          'border-left: 3px solid #ef4444',
+        ].join(';');
+
+        var icon = document.createElement('span');
+        icon.style.cssText = [
+          'font-size: 16px',
+        ].join(';');
+        icon.textContent = '✅';
+
+        var info = document.createElement('div');
+        info.style.cssText = [
+          'flex: 1',
+        ].join(';');
+
+        var name = document.createElement('p');
+        name.style.cssText = [
+          'font-size: 13px',
+          'font-weight: 600',
+          'color: #e5e7eb',
+          'margin: 0',
+        ].join(';');
+        name.textContent = getRandomName();
+
+        var time = document.createElement('p');
+        time.style.cssText = [
+          'font-size: 12px',
+          'color: rgba(156, 163, 175, 0.7)',
+          'margin: 0',
+        ].join(';');
+        time.textContent = 'verificou ' + getTimeAgo();
+
+        info.appendChild(name);
+        info.appendChild(time);
+        item.appendChild(icon);
+        item.appendChild(info);
+        itemsContainer.appendChild(item);
+      }
+    }
+
+    // Initial update
+    updateVerifications();
+
+    // Update every 1 minute (60000 ms)
+    setInterval(updateVerifications, 60000);
 
     return section;
   }
@@ -363,6 +297,7 @@
   function injectSections() {
     var mainElement = document.querySelector('main');
     if (mainElement) {
+      mainElement.appendChild(createOnlineSection());
       mainElement.appendChild(createFAQSection());
       mainElement.appendChild(createRecentVerificationsSection());
     }
