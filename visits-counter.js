@@ -21,7 +21,7 @@
           'flex-direction: column',
           'align-items: center',
           'gap: 4px',
-          'z-index: 50',
+          'z-index: 9999',
           'font-family: Inter, sans-serif',
           'pointer-events: none',
         ].join(';');
