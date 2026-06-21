@@ -363,7 +363,6 @@
   function injectSections() {
     var mainElement = document.querySelector('main');
     if (mainElement) {
-      mainElement.appendChild(createFeedbacksSection());
       mainElement.appendChild(createFAQSection());
       mainElement.appendChild(createRecentVerificationsSection());
     }
