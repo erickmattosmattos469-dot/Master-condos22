@@ -7,7 +7,7 @@
     audio.id = 'ambient-music';
     audio.src = '/ambient-music.mp3';
     audio.loop = true;
-    audio.volume = 0.15; // Low volume (15%)
+    audio.volume = 0.5; // Medium volume (50%)
     document.body.appendChild(audio);
 
     // Create music player button
