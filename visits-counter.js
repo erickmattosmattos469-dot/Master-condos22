@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  // Add visits counter to the page at the very beginning
+  // Add visits counter to the page at the very top
   function addVisitsCounter() {
     // Create a MutationObserver to wait for the React app to load
     var observer = new MutationObserver(function () {
@@ -9,19 +9,21 @@
       var rootElement = document.getElementById('root');
       
       if (rootElement && rootElement.firstChild && !document.getElementById('visits-counter-simple')) {
-        // Create the visits counter container - simple and minimal
+        // Create the visits counter container - fixed at top center
         var counterContainer = document.createElement('div');
         counterContainer.id = 'visits-counter-simple';
         counterContainer.style.cssText = [
           'position: fixed',
-          'top: 80px',
-          'right: 24px',
+          'top: 16px',
+          'left: 50%',
+          'transform: translateX(-50%)',
           'display: flex',
           'flex-direction: column',
           'align-items: center',
           'gap: 4px',
           'z-index: 50',
           'font-family: Inter, sans-serif',
+          'pointer-events: none',
         ].join(';');
 
         // Create the counter number
