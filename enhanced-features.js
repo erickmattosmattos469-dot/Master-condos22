@@ -233,11 +233,9 @@
   // Initialize on page load
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-      logSiteVisit();
       updateGameLinks();
     });
   } else {
-    logSiteVisit();
     updateGameLinks();
   }
 })();
